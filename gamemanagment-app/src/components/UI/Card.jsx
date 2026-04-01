@@ -1,8 +1,8 @@
-function Card({ title, member }) {
+function Card({ title, children }) {
   return (
     <section className="card">
       {title && <h2>{title}</h2>}
-      {member}
+      {children}
     </section>
   );
 }
