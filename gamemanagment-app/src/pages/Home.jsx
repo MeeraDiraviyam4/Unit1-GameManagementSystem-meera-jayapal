@@ -6,7 +6,7 @@ function Home() {
     <section className="home-hero">
       <div>
         <h2>Organize tennis & pickleball</h2>
-        <p>RSVP, track scores, and manage tournaments.</p>
+        <p>RSVP, Track Scores, and Manage tournaments.</p>
         <div className="hero-actions">
           <Link to="/player">
             <Button>Player Dashboard</Button>

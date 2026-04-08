@@ -3,6 +3,18 @@ import Button from "../UI/Button.jsx";
 function GameRow({ match, onRsvp }) {
   const { id, sport, opponent, date, time, location, rsvpStatus } = match;
 
+  const getButtonVariant = (status) => {
+    if (status === "accepted") return "success";
+    if (status === "denied") return "danger";
+    return "secondary";
+  };
+
+  const getButtonText = (status) => {
+    if (status === "accepted") return "Going ✓";
+    if (status === "denied") return "Declined ✗";
+    return "Decline";
+  };
+
   return (
     <tr>
       <td>{sport}</td>
@@ -14,14 +26,16 @@ function GameRow({ match, onRsvp }) {
         <Button
           variant={rsvpStatus === "accepted" ? "success" : "secondary"}
           onClick={() => onRsvp(id, "accepted")}
+          disabled={rsvpStatus === "denied"}
         >
-          Going
+          {rsvpStatus === "accepted" ? "Going ✓" : "Going"}
         </Button>
         <Button
-          variant={rsvpStatus === "declined" ? "danger" : "secondary"}
-          onClick={() => onRsvp(id, "declined")}
+          variant={rsvpStatus === "denied" ? "danger" : "secondary"}
+          onClick={() => onRsvp(id, "denied")}
+          disabled={rsvpStatus === "accepted"}
         >
-          Decline
+          {rsvpStatus === "denied" ? "Decline ✗" : "Decline"}
         </Button>
       </td>
     </tr>

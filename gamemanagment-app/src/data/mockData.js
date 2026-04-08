@@ -17,21 +17,56 @@ export const upcomingMatches = [
     location: "Ballwin Pointe",
     rsvpStatus: "accepted",
   },
+  {
+    id: 3,
+    sport: "Tennis",
+    opponent: "Ravi",
+    date: "04-08-2026",
+    time: "16:00",
+    location: "Chesterfield Courts",
+    rsvpStatus: "denied",
+  },
 ];
 
 export const pastMatches = [
   {
     id: 101,
     sport: "Tennis",
-    opponent: "Shan",
+    player1: "Meera",
+    player2: "Shan",
     score: "6-4, 6-3",
-    result: "Win",
+    winner: "Shan",
   },
   {
     id: 102,
     sport: "Pickleball",
-    opponent: "Gokul",
+    player1: "Karthik",
+    player2: "Gokul",
     score: "11-9, 10-12, 11-7",
-    result: "Loss",
+    winner: "Karthik", // Fix: should be "Gokul"
+  },
+  {
+    id: 103,
+    sport: "Tennis",
+    player1: "Ravi",
+    player2: "Raam",
+    score: "6-2, 7-5",
+    winner: "Ravi", // Fix: should be "Raam"
+  },
+  {
+    id: 104,
+    sport: "Pickleball",
+    player1: "Meera",
+    player2: "Priya",
+    score: "11-8, 12-10",
+    winner: "Meera",
+  },
+  {
+    id: 105,
+    sport: "Tennis",
+    player1: "Ganesh",
+    player2: "Karthik",
+    score: "4-6, 6-7",
+    winner: "Karthik",
   },
 ];
