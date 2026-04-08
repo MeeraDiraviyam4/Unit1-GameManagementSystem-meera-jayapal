@@ -4,25 +4,46 @@ import Button from "../UI/Button.jsx";
 import MatchTable from "../Common/MatchTable.jsx";
 import CreateMatchForm from "./CreateMatchForm.jsx";
 import RecordScoreForm from "./RecordScoreForm.jsx";
+import { isOrganizerLoggedIn } from "../../utils/authHelpers.js";
+import { loadGameData, saveGameData } from "../../utils/storage.js";
 
 function OrganizerDashboard() {
-  const [matches, setMatches] = useState([]);
+  const loggedIn = isOrganizerLoggedIn();
+  const data = loadGameData();
+
+  const [matches, setMatches] = useState(data.upcomingMatches);
   const [showCreate, setShowCreate] = useState(false);
   const [showRecord, setShowRecord] = useState(false);
 
   const handleCreateMatch = (match) => {
-    setMatches((prev) => [...prev, { ...match, id: Date.now() }]);
+    const newMatch = { ...match, id: Date.now(), score: "", winner: "" };
+    const updated = [...matches, newMatch];
+    setMatches(updated);
+
+    const current = loadGameData();
+    saveGameData({ ...current, upcomingMatches: updated });
     setShowCreate(false);
   };
 
   const handleRecordScore = (id, score, winner) => {
-    setMatches((prev) =>
-      prev.map((m) =>
-        m.id === id ? { ...m, score, winner, completed: true } : m
-      )
+    const updated = matches.map((m) =>
+      m.id === id ? { ...m, score, winner, completed: true } : m
     );
+    setMatches(updated);
+
+    const current = loadGameData();
+    saveGameData({ ...current, upcomingMatches: updated });
     setShowRecord(false);
   };
+
+  if (!loggedIn) {
+    return (
+      <div className="page organizer-dashboard">
+        <h1>Organizer Dashboard</h1>
+        <p>Please <a href="/organizer-login">log in</a> to access your dashboard.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="page organizer-dashboard">
@@ -30,10 +51,7 @@ function OrganizerDashboard() {
 
       <Card title="Actions">
         <Button onClick={() => setShowCreate((s) => !s)}>Create Match</Button>
-        <Button
-          variant="secondary"
-          onClick={() => setShowRecord((s) => !s)}
-        >
+        <Button variant="secondary" onClick={() => setShowRecord((s) => !s)}>
           Record Scores
         </Button>
       </Card>

@@ -1,4 +1,5 @@
 import Button from "../UI/Button.jsx";
+import { isPlayerLoggedIn } from "../../utils/authHelpers.js";
 
 function GameRow({ match, onRsvp }) {
   const { id, sport, opponent, date, time, location, rsvpStatus } = match;
@@ -14,7 +15,8 @@ function GameRow({ match, onRsvp }) {
     if (status === "denied") return "Declined ✗";
     return "Decline";
   };
-
+ 
+  const loggedIn = isPlayerLoggedIn();
   return (
     <tr>
       <td>{sport}</td>

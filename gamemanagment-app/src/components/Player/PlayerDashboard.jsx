@@ -1,36 +1,35 @@
 import { useState } from "react";
 import Card from "../UI/Card.jsx";
-import UpcomingGamesList from "./UpcomingGamesList.jsx";
 import AvailabilityForm from "./AvailabilityForm.jsx";
 import MatchHistory from "../Common/MatchHistory.jsx";
-import {
-  upcomingMatches as initialUpcoming,
-  pastMatches,
-} from "../../data/mockData.js";
+import { isPlayerLoggedIn } from "../../utils/authHelpers.js";
+import { loadGameData, saveGameData } from "../../utils/storage.js";
 
 function PlayerDashboard() {
-  const [upcoming, setUpcoming] = useState(initialUpcoming);
-  const [availability, setAvailability] = useState("Evenings & weekends");
+  const loggedIn = isPlayerLoggedIn();
+  const data = loadGameData();
 
-  const handleRsvp = (id, status) => {
-    setUpcoming((prev) =>
-      prev.map((match) =>
-        match.id === id ? { ...match, rsvpStatus: status } : match
-      )
-    );
-  };
+  const [availability, setAvailability] = useState(data.availability);
+  const [pastMatches] = useState(data.pastMatches);
 
   const handleAvailabilityChange = (newAvailability) => {
     setAvailability(newAvailability);
+    const current = loadGameData();
+    saveGameData({ ...current, availability: newAvailability });
   };
+
+  if (!loggedIn) {
+    return (
+      <div className="page player-dashboard">
+        <h1>Player Dashboard</h1>
+        <p>Please <a href="/player-login">log in</a> to access your dashboard.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="page player-dashboard">
       <h1>Player Dashboard</h1>
-
-      <Card title="Next Games">
-        <UpcomingGamesList matches={upcoming} onRsvp={handleRsvp} />
-      </Card>
 
       <Card title="My Availability">
         <p>Current: {availability}</p>
@@ -48,5 +47,3 @@ function PlayerDashboard() {
 }
 
 export default PlayerDashboard;
-
-
