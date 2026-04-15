@@ -19,7 +19,8 @@ function UpcomingGamesList({ matches, onRsvp }) {
       </thead>
       <tbody>
         {matches.map((match) => (
-          <GameRow key={match.id} match={match} onRsvp={onRsvp} />
+          <GameRow key={match.id} match={match} onRsvp={onRsvp}
+           players={`${match.player1} vs ${match.player2}`}/>
         ))}
       </tbody>
     </table>

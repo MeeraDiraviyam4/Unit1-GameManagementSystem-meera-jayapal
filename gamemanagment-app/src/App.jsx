@@ -6,8 +6,10 @@ import About from "./pages/About.jsx";
 import PlayerDashboard from "./components/Player/PlayerDashboard.jsx";
 import OrganizerDashboard from "./components/Organizer/OrganizerDashboard.jsx";
 import LoginForm from "./components/LoginForm.jsx";
-
+import { seedGameData } from "./utils/seedData.js";
 function App() {
+
+  seedGameData(); // Seed the database with initial game data
   return (
     <div className="app">
       <Header />

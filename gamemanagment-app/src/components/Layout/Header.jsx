@@ -10,10 +10,10 @@ function Header() {
             <NavLink to="/">Home</NavLink>
           </li>
           <li>
-             <NavLink to="/player-login">Player Login</NavLink>
+             <NavLink to="/organizer-login">Organizer Login</NavLink>
           </li>
           <li>
-           <NavLink to="/organizer-login">Organizer Login</NavLink>
+           <NavLink to="/player-login">Player Login</NavLink>
           </li>
           <li>
             <NavLink to="/about">About</NavLink>

@@ -1,19 +1,18 @@
 :root {
-  --bg-1: hsl(98, 83%, 50%);
-  --bg-2: hsl(219, 89%, 47%);
-  --bg-3: hsl(205, 88%, 36%);
+  --bg-1: lab(81.34% 10.95 -9.51);
+  --bg-2: hsl(228, 24%, 76%);
+  --bg-3: hsla(295, 81%, 72%, 0.584);
   --panel: rgba(231, 223, 223, 0.756);
-  --panel-border: rgba(255, 255, 255, 0.14);
-  --text: lab(72.5% 6.03 72.07);
+  --panel-border: rgba(240, 5, 5, 0.14);
+  --text: lch(34.02% 126.16 306.81);
   --muted: hsl(276, 83%, 2%);
-  --primary: #095b7e;
+  --primary: #10a6e7;
   --secondary: #dcba11;
   --accent: #f2ebe0;
-  --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  --shadow: 0 18px 40px rgba(14, 215, 61, 0.28);
   --radius: 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
 
 * {
   box-sizing: border-box;
@@ -31,7 +30,7 @@ body {
     radial-gradient(circle at top right, rgba(167, 139, 250, 0.24), transparent 28%),
     linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3)),
     linear-gradient(rgba(6, 17, 31, 0.75), rgba(6, 17, 31, 0.75)),
-  url("/images/Game.jpeg") center/cover no-repeat;
+    url("/images/Game.jpeg") center/cover no-repeat;
   background-attachment: fixed;
 }
 
@@ -61,7 +60,7 @@ main {
   top: 0;
   z-index: 100;
   backdrop-filter: blur(16px);
-  background: rgba(6, 17, 31, 0.72);
+  background: rgba(181, 171, 57, 0.72);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -104,7 +103,7 @@ main {
 
 .nav-links a:hover {
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.28), rgba(167, 139, 250, 0.28));
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.18);
+  box-shadow: 0 0 20px rgba(14, 161, 224, 0.18);
   transform: translateY(-2px);
 }
 
@@ -155,84 +154,19 @@ main {
 }
 
 .home-hero {
-  position: relative;
-  min-height: 80vh;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  align-items: center;
-  gap: 2rem;
-  padding: 3rem;
-  border-radius: 24px;
-  overflow: hidden;
-  background:
-    linear-gradient(rgba(232, 211, 16, 0.72), rgba(16, 99, 209, 0.72)),
-    url("/images/Game.jpeg") center/cover no-repeat;
-  box-shadow: 0 18px 40px rgba(239, 38, 38, 0.808);
-}
-
-.home-hero h2 {
-  font-size: clamp(1rem, 4vw, 3rem);
-  margin: 0 0 1rem;
-  margin-top : 0;
-  line-height:1.0;
-}
-
-.home-hero p,
-p {
-  color: hwb(226 4% 7%)(--muted);
-  line-height: 1.7;
-  font-size: 1.05rem;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.9rem;
-  margin-top: 1.5rem;
-}
-
-@media (max-width: 900px) {
-  .nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .home-hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    min-height: auto;
-  }
-}
-
-@media (max-width: 640px) {
-  main {
-    padding: 1rem;
-  }
-
-  .nav-links {
-    gap: 0.5rem;
-  }
-
-  .logo {
-    font-size: clamp(1.6rem, 8vw, 2.4rem);
-  }
-}
-
-.home-hero {
   min-height: 100vh;
-  background-image: url("/images/Game.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  color:  lab(85.06% -9.01 84.19);
   text-align: center;
   padding: 4rem 2rem 2rem;
+  position: relative;
   overflow: hidden;
+  color: lab(85.06% -9.01 84.19);
+  background:
+    linear-gradient(rgba(232, 211, 16, 0.72), rgba(16, 99, 209, 0.72)),
+    url("/images/Game.jpeg") center/cover no-repeat fixed;
+  box-shadow: 0 18px 40px rgba(239, 38, 38, 0.808);
 }
 
 .hero-content {
@@ -242,7 +176,7 @@ p {
 }
 
 .hero-content h2 {
-  font-size: clamp(3rem, 8vw, 5rem);  /* CHANGED: BIGGER text */
+  font-size: clamp(3rem, 8vw, 5rem);
   margin: 0 0 1rem 0;
   font-weight: 900;
   letter-spacing: 2px;
@@ -250,21 +184,28 @@ p {
   line-height: 1.1;
 }
 
-.hero-content p {
-  font-size: clamp(1.2rem, 3vw, 1.8rem);  /* CHANGED: bigger subtitle */
+.hero-content p,
+p {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   margin: 0;
   opacity: 0.95;
   text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+  line-height: 1.7;
 }
 
-/* Player Login - Tennis background */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
 .login-page[data-role="player"] {
-  background-image: url("/images/Tennis3.jpeg"); 
+  background-image: url("/images/Tennis3.jpeg");
 }
 
-/* Organizer Login - Pickleball background */
 .login-page[data-role="organizer"] {
-  background-image: url("/images/Pick1.jpeg");  
+  background-image: url("/images/Pick1.jpeg");
 }
 
 .login-page {
@@ -273,30 +214,18 @@ p {
   background-repeat: no-repeat;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;  /* CHANGED: moved login form up */
-  justify-content: center;
-  padding: 6rem 2rem 2rem;  /* CHANGED: more top padding */
-  position: relative;
-}
-
-.login-page {
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
   position: relative;
-  min-height: 100vh;
 }
 
 .login-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 1;
-}  
+}
 
 .login-form {
   background: rgba(255, 255, 255, 0.95);

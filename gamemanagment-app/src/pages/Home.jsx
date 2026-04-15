@@ -11,7 +11,7 @@ function Home() {
     >
       <div>
         <h1>Organize tennis & pickleball</h1>
-        <p>RSVP, Track Scores and Manage Tournaments.</p>
+        <h2>RSVP, Track Scores and Manage Tournaments.</h2>
       </div>
     </section>
   );
