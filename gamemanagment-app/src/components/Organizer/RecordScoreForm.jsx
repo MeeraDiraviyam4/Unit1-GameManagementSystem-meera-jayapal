@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../UI/Button.jsx";
 
 function RecordScoreForm({ matches, onSave }) {
-  const [selectedId, setSelectedId] = useState(matches?.id ?? "");
+  const [selectedId, setSelectedId] = useState(matches?.[0]?.id ?? ""); // Fix: index into array
   const [score, setScore] = useState("");
   const [winner, setWinner] = useState("");
   const [error, setError] = useState("");
@@ -25,6 +25,9 @@ function RecordScoreForm({ matches, onSave }) {
           value={selectedId}
           onChange={(e) => setSelectedId(e.target.value)}
         >
+          {(!matches || matches.length === 0) && (
+            <option value="">No matches available</option>
+          )}
           {matches.map((m) => (
             <option key={m.id} value={m.id}>
               {m.sport} on {m.date} at {m.time}

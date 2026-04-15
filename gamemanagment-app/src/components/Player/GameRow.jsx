@@ -20,7 +20,8 @@ function GameRow({ match, onRsvp }) {
   return (
     <tr>
       <td>{sport}</td>
-      <td>{opponent}</td>
+      <td>{player1}</td>
+      <td>{player2}</td>
       <td>{date}</td>
       <td>{time}</td>
       <td>{location}</td>

@@ -10,7 +10,8 @@ function UpcomingGamesList({ matches, onRsvp }) {
       <thead>
         <tr>
           <th>Sport</th>
-          <th>Opponent</th>
+          <th>Player1</th>
+          <th>Player2</th>
           <th>Date</th>
           <th>Time</th>
           <th>Location</th>
@@ -19,8 +20,13 @@ function UpcomingGamesList({ matches, onRsvp }) {
       </thead>
       <tbody>
         {matches.map((match) => (
-          <GameRow key={match.id} match={match} onRsvp={onRsvp}
-           players={`${match.player1} vs ${match.player2}`}/>
+          <GameRow
+            key={match.id}
+            match={match}
+            onRsvp={onRsvp}
+            player1={match.player1}
+            player2={match.player2}
+          />
         ))}
       </tbody>
     </table>

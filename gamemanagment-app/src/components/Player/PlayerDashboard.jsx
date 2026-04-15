@@ -22,27 +22,50 @@ function PlayerDashboard() {
   }, [loggedIn]);
 
   const handleRsvp = (id, status) => {
-    setUpcomingMatches((prev) =>
-      prev.map((match) =>
-        match.id === id 
-          ? { ...match, rsvpStatus: status } 
-          : match
-      )
-    );
-    
-    // Save to localStorage
+  const playerName = status === "accepted" ? window.prompt("Enter your player name:") : "";
+
+  if (status === "accepted" && !playerName) return;
+
+  setUpcomingMatches((prev) => {
+    const updatedMatches = prev.map((match) => {
+      if (match.id !== id) return match;
+
+      if (status === "accepted") {
+        if (!match.player1) {
+          return { ...match, player1: playerName, rsvpStatus: "accepted" };
+        }
+
+        if (match.player1 && !match.player2) {
+          return { ...match, player2: playerName, rsvpStatus: "accepted" };
+        }
+      }
+
+      return { ...match, rsvpStatus: status };
+    });
+
     const data = loadGameData();
-    const updatedMatches = upcomingMatches.map((match) =>
-      match.id === id 
-        ? { ...match, rsvpStatus: status } 
-        : match
-    );
     saveGameData({ ...data, upcomingMatches: updatedMatches });
+
+    return updatedMatches;
+  });
+};
+
+  const clearUpcomingMatches = () => {
+    const data = loadGameData();
+    const updatedData = { ...data, upcomingMatches: [] };
+    saveGameData(updatedData);
+    setUpcomingMatches([]);
   };
+
+  const handleSignout = () => {
+  localStorage.removeItem("isPlayerLoggedIn");
+  localStorage.removeItem("playerName");
+  window.location.href = "/player-login";
+};
 
   const handleAvailabilityChange = (newAvailability) => {
     setAvailability(newAvailability);
-    const data = loadGameData();
+  const data = loadGameData();
     saveGameData({ ...data, availability: newAvailability });
   };
 
@@ -65,6 +88,15 @@ function PlayerDashboard() {
     <div className="page player-dashboard">
       <h1>Player Dashboard</h1>
 
+  <div className="page player-dashboard">
+    <div className="dashboard-header">
+    <div className="signout-form">
+        <button className="btn btn-secondary" onClick={handleSignout}>
+          Sign Out
+        </button>
+      </div>
+    </div>
+  
       {/* Availability */}
       <Card title="My Availability">
         <div className="availability-section">
@@ -77,9 +109,15 @@ function PlayerDashboard() {
           />
         </div>
       </Card>
+    
+  </div>
 
       {/* Upcoming Matches with RSVP */}
       <Card title="Upcoming Matches">
+        <button className="btn btn-secondary" onClick={clearUpcomingMatches}>
+          Clear Upcoming Matches
+        </button>
+
         {upcomingMatches.length === 0 ? (
           <p>No upcoming matches. Check back soon!</p>
         ) : (
@@ -88,7 +126,8 @@ function PlayerDashboard() {
               <thead>
                 <tr>
                   <th>Sport</th>
-                  <th>Opponent</th>
+                  <th>Player1</th>
+                  <th>Player2</th>
                   <th>Date</th>
                   <th>Time</th>
                   <th>Location</th>
@@ -99,43 +138,44 @@ function PlayerDashboard() {
                 {upcomingMatches.map((match) => (
                   <tr key={match.id} className={`match-row ${match.rsvpStatus}`}>
                     <td>{match.sport}</td>
-                    <td>{match.opponent}</td>
+                    <td>{match.player1 || "-"}</td>
+                    <td>{match.player2 || "-"}</td>
                     <td>{match.date}</td>
                     <td>{match.time}</td>
                     <td>{match.location}</td>
                     <td className="rsvp-actions">
-                      {match.rsvpStatus === "accepted" ? (
-                        <span className="rsvp-status going">✅ Going</span>
-                      ) : match.rsvpStatus === "denied" ? (
-                        <span className="rsvp-status declined">❌ Declined</span>
-                      ) : (
-                        <>
-                          <button
-                            className="rsvp-btn going-btn"
-                            onClick={() => handleRsvp(match.id, "accepted")}
-                          >
-                            Going
-                          </button>
-                          <button
-                            className="rsvp-btn decline-btn"
-                            onClick={() => handleRsvp(match.id, "denied")}
-                          >
-                            Decline
-                          </button>
-                        </>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Card>
+  {match.rsvpStatus === "accepted" ? (
+    <span className="rsvp-status going">✅ Going</span>
+  ) : match.rsvpStatus === "denied" ? (
+    <span className="rsvp-status declined">❌ Declined</span>
+  ) : (
+    <>
+      <button
+        className="rsvp-btn going-btn"
+        onClick={() => handleRsvp(match.id, "accepted")}
+      >
+        Going
+      </button>
+      <button
+        className="rsvp-btn decline-btn"
+        onClick={() => handleRsvp(match.id, "denied")}
+      >
+        Decline
+      </button>
+    </>
+  )}
+</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+)}
+</Card>
 
-      {/* Past Matches */}
-      <Card title="Match History">
-        {pastMatches.length === 0 ? (
+{/* Past Matches */}
+<Card title="Match History">
+  {pastMatches.length === 0 ? (
           <p>No past matches yet.</p>
         ) : (
           <div className="match-history">
